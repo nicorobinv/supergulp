@@ -37,7 +37,7 @@ const routes = {
 const pug = () =>
   gulp.src(routes.pug.src).pipe(gpug()).pipe(gulp.dest(routes.pug.dest));
 
-const clean = () => del(["build/"]);
+const clean = () => del(["build/", ".publish"]);
 
 const webserver = () => gulp.src("build").pipe(ws({ livereload: true }));
 
@@ -86,4 +86,4 @@ const live = gulp.parallel([webserver, watch]);
 
 export const build = gulp.series([prepare, assets]);
 export const dev = gulp.series([build, live]);
-export const deploy = gulp.series([build, ghDeploy]);
+export const deploy = gulp.series([build, ghDeploy, clean]);
